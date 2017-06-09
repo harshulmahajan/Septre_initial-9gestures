@@ -18,7 +18,7 @@
 #include <IRremoteInt.h>
 #include <ir_Lego_PF_BitStreamEncoder.h>
 void LED (void)
-  {       digitalWrite(7,LOW);//Blue LED
+  {       digitalWrite(8,LOW);//Blue LED
           digitalWrite(6,LOW);//Red LED
           digitalWrite(5,HIGH);//Green LED
           delay(3000);
