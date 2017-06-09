@@ -18,12 +18,12 @@
 #include <IRremoteInt.h>
 #include <ir_Lego_PF_BitStreamEncoder.h>
 void LED (void)
-  {       digitalWrite(8,LOW);//Blue LED
+  {       digitalWrite(7,LOW);//Blue LED
           digitalWrite(6,LOW);//Red LED
           digitalWrite(5,HIGH);//Green LED
           delay(3000);
           Serial.println("ready");
-          
+
       }
 IRsend irsend;
 
@@ -116,7 +116,7 @@ void dump(decode_results *results) {
 }
 
 
-#define X_NEG_TO_POS_NEG 
+#define X_NEG_TO_POS_NEG
 void loop() {
   float ax,ay,az;
   float gx,gy,gz;
@@ -127,11 +127,11 @@ void loop() {
   fabo_9axis.readGyroXYZ(&gx,&gy,&gz);
   fabo_9axis.readMagnetXYZ(&mx,&my,&mz);
   fabo_9axis.readTemperature(&temp);
-  
+
   unsigned long now = millis();
-  
+
   if(ax<-0.75){
-    Serial.println("Move now in x-"); 
+    Serial.println("Move now in x-");
     digitalWrite(6,HIGH);//Red LED
     while(millis() - now < 2000){
       //Serial.println(ax);
@@ -140,11 +140,11 @@ void loop() {
       {for(int i=0;i<3;i++)
       {Serial.println("X -");//fan speed low//TV PREVISOUS CHANNEL
       irsend.sendSony(0xc90, 12);
-      delay(200); 
+      delay(200);
       }
         LED();
-        
-        break;     
+
+        break;
         }
     }
   }
@@ -154,37 +154,37 @@ void loop() {
     digitalWrite(6,HIGH);//Red LED
     while(millis() - now < 2000){
      // Serial.println(ax);
-      fabo_9axis.readAccelXYZ(&ax,&ay,&az); 
+      fabo_9axis.readAccelXYZ(&ax,&ay,&az);
       if(ax<-0.5)
       {
-       
+
       for(int i=0;i<3;i++)
       {  Serial.println("X +");
         irsend.sendSony(0x490, 12);
         delay(200);//fan speed high;//TV NEXT CHANNEL
-        } 
+        }
         LED();
-        
+
         break;
       }
       else if(az<-1.19)
       {
-       
+
       for(int i=0;i<3;i++)
       {  Serial.println("Hand Flip");
         irsend.sendSony(0xa90, 12);//FAN RELAY ON
         delay(200);
-        } 
+        }
         LED();
-        
-        break; 
+
+        break;
       }
       }
     }
 
 
 if(ay>0.6){
-    Serial.println("Move now in y-90"); 
+    Serial.println("Move now in y-90");
     digitalWrite(6,HIGH);//Red LED
     while(millis() - now < 2000){
       //Serial.println(ax);
@@ -197,44 +197,44 @@ if(ay>0.6){
       {for(int i=0;i<3;i++)
       {Serial.println("unique gesture 2");
       irsend.sendSony(0xc90, 12);
-      delay(200); 
+      delay(200);
       }
         LED();
-        
-        break; 
+
+        break;
       }
       else if (ay<0.2)
       {
         for(int i=0;i<3;i++)
       {Serial.println("y -90 degree");
       irsend.sendSony(0X555, 12);
-      delay(200); 
+      delay(200);
       }
-      
+
         LED();
-        
+
         break;
-        } 
+        }
       }
       }
       else if(ay<0.3)
       {for(int i=0;i<3;i++)
       {Serial.println("y -60 degree");
       irsend.sendSony(0x333, 12);//FAN RELAY OFF
-      delay(200); 
+      delay(200);
       }
-      
+
         LED();
-        
-        break; 
+
+        break;
       }
-      
+
     }
   }
 
 if(ay<-0.15)
 {
-    Serial.println("Move now in y+90"); 
+    Serial.println("Move now in y+90");
     digitalWrite(6,HIGH);//Red LED
     while(millis() - now < 2000){
       //Serial.println(ax);
@@ -243,31 +243,31 @@ if(ay<-0.15)
       {for(int i=0;i<3;i++)
       {Serial.println("y +90 degree");
       irsend.sendSony(0x777, 12); // LED RELAY ON
-      delay(200); 
+      delay(200);
       }
        LED();
-        
-       break; 
+
+       break;
       }
       else if(ax>0.3)
       {for(int i=0;i<3;i++)
       {Serial.println("unique gesture 1");
       irsend.sendSony(0xc90, 12);
-      delay(200); 
+      delay(200);
       }
         LED();
-        
-        break; 
+
+        break;
       }
     else if(ay>0.3)
       {for(int i=0;i<3;i++)
       {Serial.println("y +60 degree");//LED RELAY OFF
       irsend.sendSony(0x888, 12);
-      delay(200); 
+      delay(200);
       }
         LED();
-        
-        break; 
+
+        break;
       }
     }
   }
